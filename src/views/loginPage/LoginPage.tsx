@@ -11,6 +11,9 @@ import z from "zod";
 import { apiBackend } from "@/clients/axios";
 import { ResponseAPI } from "@/interfaces/ResponseAPI";
 import { User } from "@/interfaces/User";
+import { useContext, useState } from "react";
+import { set } from "zod/v4-mini";
+import { AuthContext } from "@/contexts/auth/AuthContext";
 const formSchema = z.object({
   correo: z.string().min(2, {
     message: "Ingrese un correo valido",
@@ -27,20 +30,42 @@ export const LoginPage = () => {
                 password: "",
             },
         });
+        const [errors, setErrors] = useState<string |null>(null);
+        const [errorBool, setErrorBool] = useState<boolean>(false);
+        const {auth,user} = useContext(AuthContext);
+
         const onSubmit = async(values: z.infer<typeof formSchema>) => {
             try {
-                const data= await apiBackend.post<any>("Auth/login",values); 
-                //const user_:User={
-               //     email: data.data.email,
-                //    lastName: data.data.lastname,
-                //    firstName: data.data.firstName,
-                //    token: data.data.token,
-                //}
+                const {data}= await apiBackend.post<ResponseAPI>("/Auth/login",values); 
+                if(data.success === false) {
+                    console.error("Error en la respuesta del servidor:", data.message);
+                    setErrors(data.message || "Error inesperado al iniciar sesión.");
+                    setErrorBool(true);
+                    return;
+                }
+                const data_ = Array.isArray(data.data) ? data.data[0] : data.data;
+                if (!data_) {
+                    setErrors("Datos de usuario no recibidos del servidor.");
+                    setErrorBool(true);
+                    return;
+                }
+                const user_: User={
+                    email: data_.email,
+                    lastName: data_.lastname,
+                    firstName: data_.firstName,
+                    token: data_.token,
+                    role: data_.role, 
+                }
+                auth(user_);
+                console.log("Usuario logueado:", user);
+                console.log("Respuesta del servidor:", data.data);
 
 
             }catch (error: any) {
-                let errorCatch = error.responde.data.message;
-                console.error("Error al iniciar sesion:", errorCatch);
+                console.error("Error completo:", error); // <--- esto te mostrará la estructura
+                const errorCatch = error?.response?.data?.message || "Error inesperado al iniciar sesión.";
+                setErrors(errorCatch);
+                setErrorBool(true);
             }
 
             
@@ -107,6 +132,11 @@ export const LoginPage = () => {
                                     </FormItem>
                                 )}
                             />
+                            {errorBool && (
+                                <div className="text-red-500 text-sm mb-4">
+                                    {errors}
+                                </div>
+                            )}
                             <Button type="submit">Iniciar sesion</Button>
                         </form>
                     </Form>
