@@ -58,6 +58,7 @@ export const RegisterPage = () => {
         try {
             const { confirmPassword, ...registerData } = values;
             const { data } = await apiBackend.post<ResponseAPI>("/Auth/register", registerData);
+            console.log("Respuesta del servidor:", data);
 
             if (data.success === false) {
                 setErrors(data.message || "Error inesperado.");
@@ -82,6 +83,7 @@ export const RegisterPage = () => {
 
             auth(user_);
         } catch (error: any) {
+            console.error("Error completo:", error); // Esto te mostrará la estructura completa del error   
             const errorCatch = error?.response?.data?.message || "Error inesperado.";
             setErrors(errorCatch);
             setErrorBool(true);
