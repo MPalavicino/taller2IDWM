@@ -22,6 +22,8 @@ export const AuthContext = createContext({}as AuthContextProps);
 
 export const AuthProvider = ({children}: any) => {
     const [state,dispatch] = useReducer(authReducer, authInitialState);
+
+
     const auth = (user: User) => {
         dispatch({type: "authenticate", payload: {user}});
     }
