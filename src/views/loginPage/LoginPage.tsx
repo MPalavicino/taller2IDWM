@@ -56,7 +56,7 @@ export const LoginPage = () => {
                Bienvenido a <br className="hidden md:block"/> Intro. al desarrollo web
                 </h1> 
                 <p className="text-base md:text-lg text-justify max-w-md">
-                    genuinamente es caleta de texto chorooo
+                    No se que poner aqui, pero este es un ejemplo de una pagina de inicio de sesion.
                 </p>
             </div>
         
