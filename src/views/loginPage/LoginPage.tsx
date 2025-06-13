@@ -14,6 +14,7 @@ import { User } from "@/interfaces/User";
 import { useContext, useState } from "react";
 import { set } from "zod/v4-mini";
 import { AuthContext } from "@/contexts/auth/AuthContext";
+import Link from "next/link";
 const formSchema = z.object({
   correo: z.string().min(2, {
     message: "Ingrese un correo valido",
@@ -94,9 +95,9 @@ export const LoginPage = () => {
                     </h3>
                     <p className="mb-4 text-sm text-gray-600 text-center md:text-left">
                         No tienes cuenta?{" "}
-                        <a href="#" className="text-blue-500 hover:underline">Registrate
+                        <Link href="/register" className="text-blue-500 hover:underline">Registrate
 
-                        </a>, es gratis!
+                        </Link>, es gratis!
                     </p>
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
