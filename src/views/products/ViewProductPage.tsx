@@ -1,5 +1,6 @@
 "use client";
 
+import { ProductCard } from "@/components/products/ProductCard";
 import { Product } from "@/interfaces/Product";
 import { useProductStore } from "@/stores/ProductStore"
 import { use, useEffect, useState } from "react";
@@ -50,12 +51,20 @@ export default function ViewProductPage() {
                 <div className="relative flex items-center justify-center h-full">
                     <h2 className="text-3xl text-white font-bold">Bienvenido a nuestra tienda</h2>
                 </div>
+            </div>
 
-
-
-
+            {/* Lista de productos */}
+            <div className="max-w-7xl mx-auto px-12 py-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                {
+                    products.map((product) => (
+                        <ProductCard
+                            key={product.id}
+                            product={product}
+                            onClick={() => setSelectedProduct(product)}
+                        />
+                    ))}
             </div>
         </div>
-
-    )
+        
+    );
 }
