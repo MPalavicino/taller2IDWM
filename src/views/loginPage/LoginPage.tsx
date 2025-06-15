@@ -20,7 +20,7 @@ const formSchema = z.object({
     message: "Ingrese un correo valido",
   }),
   password: z.string().min(6, {
-    message: "Password must be at least 6 characters.", 
+    message: "La contraseña debe tener al menos 6 caracteres", 
     }),
 })
 export const LoginPage = () => {
@@ -79,10 +79,10 @@ export const LoginPage = () => {
             {/* Left side with image or logo */}
             <div className = "md:w-1/2 w-full bg-blue-700 text-white flex flex-col justify-center items-center p-10">
              <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center" >
-               Bienvenido a <br className="hidden md:block"/> Intro. al desarrollo web
+               Bienvenido a <br className="hidden md:block"/>la tiendita
                 </h1> 
                 <p className="text-base md:text-lg text-justify max-w-md">
-                    No se que poner aqui, pero este es un ejemplo de una pagina de inicio de sesion.
+                    Todo lo que necesitas en un solo lugar!
                 </p>
             </div>
         
@@ -122,12 +122,12 @@ export const LoginPage = () => {
                                 name="password"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Password</FormLabel>
+                                        <FormLabel>Contraseña</FormLabel>
                                         <FormControl>
-                                            <Input type="password" placeholder="********" {...field} />
+                                            <Input type="contraseña" placeholder="********" {...field} />
                                         </FormControl>
                                         <FormDescription>
-                                            Your password must be at least 6 characters long.
+                                            La contraseña debe tener al menos 6 caracteres.
                                         </FormDescription>
                                         <FormMessage />
                                     </FormItem>
