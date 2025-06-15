@@ -100,10 +100,10 @@ export const RegisterPage = () => {
     <div className="flex flex-col md:flex-row h-screen">
       <div className="md:w-1/2 w-full bg-blue-700 text-white flex flex-col justify-center items-center p-10">
         <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center">
-          Bienvenido a <br className="hidden md:block" /> Intro. al desarrollo web
+          Bienvenido a <br className="hidden md:block" /> la tiendita 
         </h1>
         <p className="text-base md:text-lg text-justify max-w-md">
-          No se qué poner aquí, pero este es un ejemplo de una página de registro.
+          Registrate para disfrutar de una experiencia de compra personalizada y acceder a ofertas exclusivas. ¡Todo lo que necesitas en un solo lugar!
         </p>
       </div>
 

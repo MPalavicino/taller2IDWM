@@ -4,6 +4,7 @@ import { ProductCard } from "@/components/products/ProductCard";
 import { Product } from "@/interfaces/Product";
 import { useProductStore } from "@/stores/ProductStore"
 import { use, useEffect, useState } from "react";
+import { ProductDialog } from "@/components/products/ProductDialog";
 
 
 
@@ -64,6 +65,15 @@ export default function ViewProductPage() {
                         />
                     ))}
             </div>
+            {/* Detalles del producto seleccionado */}
+            <ProductDialog
+                product = {selectedProduct}
+                open= {!!selectedProduct}
+                onClose ={()=> setSelectedProduct(null)}
+            />
+            
+            
+
         </div>
         
     );
