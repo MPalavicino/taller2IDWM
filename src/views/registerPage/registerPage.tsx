@@ -108,7 +108,7 @@ export const RegisterPage = () => {
       </div>
 
       <div className="md:w-1/2 w-full flex items-center justify-center bg-white px-6 py-10">
-        <div className="w-max max-w-2xl space-y-4">
+        <div className="w-full max-w-md">
           <h2 className="text-3xl font-bold text-center">Registro</h2>
           <p className="text-sm text-gray-600 text-center">
             ¿Ya tienes cuenta?{" "}
@@ -119,7 +119,7 @@ export const RegisterPage = () => {
 
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+              <div className="grid md:grid-cols-2 gap-4 w-full">
                 {[ 
                   { name: "firstName", label: "Nombre" },
                   { name: "lastName", label: "Apellido" },

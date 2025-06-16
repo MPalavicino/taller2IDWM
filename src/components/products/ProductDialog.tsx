@@ -19,19 +19,27 @@ export const ProductDialog = ({ product, open, onClose }: ProductDialogProps) =>
                     <DialogDescription>Detalle del producto</DialogDescription>
                 </DialogHeader>
 
-                <div className = "flex flex-col items-center">  
-                    
-                    <Image src="/Producto.jpg" alt={product.name} width ={200} height ={200} className="object-contain"/>
-                    <p className = "text-blue-700 font-bold text-2x1 mt-4"> ${product.price.toFixed(2)}</p>
+                <div className="flex flex-col items-center">
+
+                    <Image src="/Producto.jpg" alt={product.name} width={200} height={200} className="object-contain" />
+                    <p className="text-blue-700 font-bold text-2x1 mt-4"> {product.price.toLocaleString('es-CL', {
+                        style: 'currency',
+                        currency: 'CLP',
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0
+                    })}</p>
                     <p className="text-gray-600 mt-2">{product.description ?? "Sin descripcion"}</p>
-                         
+               
                     
-                    
-                    
-                    
-                 </div>
+
+
+
+
+
+                </div>
+                <p className="text-gray-600 mt-1">Stock Disponible: {product.stock}</p>
             </DialogContent>
-        
+
         </Dialog>
     );
 }
