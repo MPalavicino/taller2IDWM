@@ -7,44 +7,7 @@ import { useProductStore } from "@/stores/ProductStore";
 import { ProductDialog } from "@/components/products/ProductDialog";
 import { Button } from "@/components/ui/button";
 
-const Pagination = () => {
-  const { filters, setFilters, products } = useProductStore();
 
-  const handlePrevious = () => {
-    if (filters.pageNumber > 1) {
-      setFilters({ pageNumber: filters.pageNumber - 1 });
-    }
-  };
-
-  const handleNext = () => {
-    // Si la cantidad de productos obtenidos es menor al pageSize, no hay más páginas
-    if (products.length >= filters.pageSize) {
-      setFilters({ pageNumber: filters.pageNumber + 1 });
-    }
-  };
-
-  return (
-    <div className="flex justify-center items-center gap-4 py-6">
-      <Button
-        variant="outline"
-        disabled={filters.pageNumber === 1}
-        onClick={handlePrevious}
-      >
-        Anterior
-      </Button>
-      <span className="text-sm font-medium text-gray-700">
-        Página {filters.pageNumber}
-      </span>
-      <Button
-        variant="outline"
-        disabled={products.length < filters.pageSize}
-        onClick={handleNext}
-      >
-        Siguiente
-      </Button>
-    </div>
-  );
-};
 
 export default function ViewProductPage() {
   const { products, loading, fetchProducts, filters } = useProductStore();
@@ -109,8 +72,7 @@ export default function ViewProductPage() {
         onClose={() => setSelectedProduct(null)}
       />
 
-      {/* Paginador */}
-      <Pagination />
+  
     </div>
   );
 }
