@@ -16,80 +16,78 @@ import { set } from "zod/v4-mini";
 import { AuthContext } from "@/contexts/auth/AuthContext";
 import Link from "next/link";
 const formSchema = z.object({
-  correo: z.string().min(2, {
-    message: "Ingrese un correo valido",
-  }),
-  password: z.string().min(6, {
-    message: "La contraseña debe tener al menos 6 caracteres", 
+    email: z.string().min(2, {
+        message: "Ingrese un correo valido",
+    }),
+    password: z.string().min(6, {
+        message: "La contraseña debe tener al menos 6 caracteres",
     }),
 })
 export const LoginPage = () => {
     const form = useForm<z.infer<typeof formSchema>>({
-            resolver: zodResolver(formSchema),
-            defaultValues: {
-                correo: "",
-                password: "",
-            },
-        });
-        const [errors, setErrors] = useState<string |null>(null);
-        const [errorBool, setErrorBool] = useState<boolean>(false);
-        const {auth,user} = useContext(AuthContext);
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            email: "",
+            password: "",
+        },
+    });
+    const [errors, setErrors] = useState<string | null>(null);
+    const [errorBool, setErrorBool] = useState<boolean>(false);
+    const { auth, user } = useContext(AuthContext);
 
-        const onSubmit = async(values: z.infer<typeof formSchema>) => {
-            try {
-                const {data}= await apiBackend.post<ResponseAPI>("/Auth/login",values); 
-                if(data.success === false) {
-                    console.error("Error en la respuesta del servidor:", data.message);
-                    setErrors(data.message || "Error inesperado al iniciar sesión.");
-                    setErrorBool(true);
-                    return;
-                }
-                const data_ = Array.isArray(data.data) ? data.data[0] : data.data;
-                if (!data_) {
-                    setErrors("Datos de usuario no recibidos del servidor.");
-                    setErrorBool(true);
-                    return;
-                }
-                const user_: User={
-                    email: data_.email,
-                    lastName: data_.lastname,
-                    firstName: data_.firstName,
-                    token: data_.token,
-                    role: data_.role, 
-                }
-                auth(user_);
-                console.log("Usuario logueado:", user);
-                console.log("Respuesta del servidor:", data.data);
-
-
-            }catch (error: any) {
-                console.error("Error completo:", error); // <--- esto te mostrará la estructura
-                const errorCatch = error?.response?.data?.message || "Error inesperado al iniciar sesión.";
-                setErrors(errorCatch);
+    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+        try {
+            const { data } = await apiBackend.post<ResponseAPI>("/Auth/login", values);
+            if (data.success === false) {
+                console.error("Error en la respuesta del servidor:", data.message);
+                setErrors(data.message || "Error inesperado al iniciar sesión.");
                 setErrorBool(true);
+                return;
             }
+            const data_ = Array.isArray(data.data) ? data.data[0] : data.data;
+            if (!data_) {
+                setErrors("Datos de usuario no recibidos del servidor.");
+                setErrorBool(true);
+                return;
+            }
+            const user_: User = {
+                email: data_.Email,
+                password: data_.Password,
 
-            
-            console.log("Valores del formulario:", values);
+            }
+            auth(user_);
+            console.log("Usuario logueado:", user);
+            console.log("Respuesta del servidor:", data.data);
+
+
+        } catch (error: any) {
+            console.error("Error completo:", error); // <--- esto te mostrará la estructura
+            const errorCatch = error?.response?.data?.message || "Error inesperado al iniciar sesión.";
+            setErrors(errorCatch);
+            setErrorBool(true);
         }
+
+
+        console.log("Valores del formulario:", values);
+    }
     return (
 
-    
+
         <div className="flex flex-col md:flex-row h-screen">
             {/* Left side with image or logo */}
-            <div className = "md:w-1/2 w-full bg-blue-700 text-white flex flex-col justify-center items-center p-10">
-             <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center" >
-               Bienvenido a <br className="hidden md:block"/>la tiendita
-                </h1> 
+            <div className="md:w-1/2 w-full bg-blue-700 text-white flex flex-col justify-center items-center p-10">
+                <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center" >
+                    Bienvenido a <br className="hidden md:block" />la tiendita
+                </h1>
                 <p className="text-base md:text-lg text-justify max-w-md">
                     Todo lo que necesitas en un solo lugar!
                 </p>
             </div>
-        
+
             {            /* Right side with login form */}
-            <div className="md:w-1/2 w-full flex items-center justify-center bg-white px-6 py-10">   
+            <div className="md:w-1/2 w-full flex items-center justify-center bg-white px-6 py-10">
                 <div className="w-full max-w-md">
-                    <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center md:text-left">Nuestra Pagina</h2>   
+                    <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center md:text-left">Nuestra Pagina</h2>
                     <h3 className="text-lg md:text-xl font-medium mb-2 text-center md:text-left">
                         Bienvenido de nuevo!
                     </h3>
@@ -103,10 +101,10 @@ export const LoginPage = () => {
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                             <FormField
                                 control={form.control}
-                                name="correo"
+                                name="email"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Correo</FormLabel>
+                                        <FormLabel>Correo¿</FormLabel>
                                         <FormControl>
                                             <Input placeholder="correo@ejemplo.com" {...field} />
                                         </FormControl>
@@ -144,7 +142,7 @@ export const LoginPage = () => {
 
                 </div>
             </div>
-                 
+
         </div>
-    ) 
+    )
 }
