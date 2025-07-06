@@ -15,6 +15,8 @@ import { useContext, useState } from "react";
 import { set } from "zod/v4-mini";
 import { AuthContext } from "@/contexts/auth/AuthContext";
 import Link from "next/link";
+import { decodeJWT } from "@/helpers/decodeJWT";
+import router from "next/router";
 const formSchema = z.object({
     email: z.string().min(2, {
         message: "Ingrese un correo valido",
@@ -50,14 +52,27 @@ export const LoginPage = () => {
                 setErrorBool(true);
                 return;
             }
+            const payload = decodeJWT(data_.token);
+            if (!payload) {
+                setErrors("Token inválido o no decodificable.");
+                setErrorBool(true);
+                return;
+            }
             const user_: User = {
                 email: data_.Email,
                 password: data_.Password,
+                role: payload.Role,
 
             }
+            localStorage.setItem("token", data_.token);
             auth(user_);
             console.log("Usuario logueado:", user);
             console.log("Respuesta del servidor:", data.data);
+            if(payload.Role === "admin"){
+                router.push("/admin");
+            } else if(payload.Role === "user") {
+                router.push("/client");
+            }
 
 
         } catch (error: any) {
