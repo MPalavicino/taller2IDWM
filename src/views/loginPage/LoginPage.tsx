@@ -16,7 +16,7 @@ import { set } from "zod/v4-mini";
 import { AuthContext } from "@/contexts/auth/AuthContext";
 import Link from "next/link";
 import { decodeJWT } from "@/helpers/decodeJWT";
-import router from "next/router";
+import { useRouter } from "next/navigation";
 const formSchema = z.object({
     email: z.string().min(2, {
         message: "Ingrese un correo valido",
@@ -36,6 +36,7 @@ export const LoginPage = () => {
     const [errors, setErrors] = useState<string | null>(null);
     const [errorBool, setErrorBool] = useState<boolean>(false);
     const { auth, user } = useContext(AuthContext);
+    const router = useRouter();
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
@@ -46,6 +47,8 @@ export const LoginPage = () => {
                 setErrorBool(true);
                 return;
             }
+            setErrorBool(false);
+            setErrors(null);
             const data_ = Array.isArray(data.data) ? data.data[0] : data.data;
             if (!data_) {
                 setErrors("Datos de usuario no recibidos del servidor.");
@@ -61,8 +64,10 @@ export const LoginPage = () => {
             const user_: User = {
                 email: data_.Email,
                 password: data_.Password,
+                firstName: data_.FirstName,
+                lastName: data_.LastName,
+                token: data_.token,
                 role: payload.Role,
-
             }
             localStorage.setItem("token", data_.token);
             auth(user_);
@@ -119,7 +124,7 @@ export const LoginPage = () => {
                                 name="email"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Correo¿</FormLabel>
+                                        <FormLabel>Correo</FormLabel>
                                         <FormControl>
                                             <Input placeholder="correo@ejemplo.com" {...field} />
                                         </FormControl>
@@ -151,7 +156,30 @@ export const LoginPage = () => {
                                     {errors}
                                 </div>
                             )}
-                            <Button type="submit">Iniciar sesion</Button>
+                            <div className="flex flex-col md:flex-row items-center justify-between mt-4">
+                                <Button type="submit">Iniciar sesión</Button>
+                                <Button
+                                    type="button"
+                                    variant={'destructive'}
+                                    onClick={() => {
+                                        form.setValue("email", "ignacio.mancilla@gmail.com");
+                                        form.setValue("password", "Pa$$word2025");
+                                    }}
+                                >
+                                    Usar Admin
+                                </Button>
+
+                                <Button
+                                    type="button"
+                                    variant='destructive'
+                                    onClick={() => {
+                                        form.setValue("email", "yerkos@gmail.com");
+                                        form.setValue("password", "StrongPassword123!");
+                                    }}
+                                >
+                                    Usar Cliente
+                                </Button>
+                            </div>
                         </form>
                     </Form>
 
