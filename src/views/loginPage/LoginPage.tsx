@@ -73,10 +73,11 @@ export const LoginPage = () => {
             auth(user_);
             console.log("Usuario logueado:", user);
             console.log("Respuesta del servidor:", data.data);
-            if(payload.Role === "admin"){
-                router.push("/admin");
-            } else if(payload.Role === "user") {
-                router.push("/client");
+            console.log("Payload decodificado:", payload.role);
+            if(payload.role === "Admin"){
+                router.push("http://localhost:3000/");
+            } else if(payload.role === "User") {
+                router.push("http://localhost:3000/");
             }
 
 
@@ -169,16 +170,7 @@ export const LoginPage = () => {
                                     Usar Admin
                                 </Button>
 
-                                <Button
-                                    type="button"
-                                    variant='destructive'
-                                    onClick={() => {
-                                        form.setValue("email", "yerkos@gmail.com");
-                                        form.setValue("password", "StrongPassword123!");
-                                    }}
-                                >
-                                    Usar Cliente
-                                </Button>
+                                
                             </div>
                         </form>
                     </Form>

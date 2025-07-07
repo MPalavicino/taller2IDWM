@@ -35,7 +35,12 @@ export const ProductCard = ({ product, onClick }: ProductCardProps) => {
                 </div>
                 <div className='p-4'>
                     <h3 className='font-semibold text-lg'>{product.name}</h3>
-                    <p className='mt-2 text-blue-700 font-bold text-xl'>${product.price}</p>
+                    <p className="text-blue-700 font-bold text-2x1 mt-4"> {product.price.toLocaleString('es-CL', {
+                        style: 'currency',
+                        currency: 'CLP',
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0
+                    })}</p>
                     <Button className='mt-4 w-full' onClick={handleAddToCart}>Agregar al Carrito</Button>
                 </div>
             </div>
