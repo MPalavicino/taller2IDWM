@@ -14,7 +14,7 @@ export default function ClientLayout({children}: {children: React.ReactNode}) {
 
     useEffect(() => {
         if (!user?.token){
-            router.replace('/login');
+            router.push('/login');
             return;
         }
 
