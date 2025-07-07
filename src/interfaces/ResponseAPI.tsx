@@ -1,6 +1,6 @@
 export interface ResponseAPI {
     success?: boolean;
     message?: string;
-    data?: any[];
+    data?: any;
     errors?: null;
 }

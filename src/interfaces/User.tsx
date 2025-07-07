@@ -12,6 +12,8 @@ export interface User{
     registeredAt?: Date;
     lastAccess?: Date;
     isActive?: boolean;
-    token: string;
-    role: string;
+    password?: string;
+    confirmPassword?: string;
+    token?: string;
+    role?: string;
 }

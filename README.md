@@ -21,6 +21,7 @@ Este proyecto corresponde al Taller 2 de la asignatura **Introducción al Desarr
 - [npm](https://www.npmjs.com/) o [bun](https://bun.sh/) o [yarn](https://yarnpkg.com/)
 - [Git](https://git-scm.com/)
 - Editor como [Visual Studio Code](https://code.visualstudio.com/)
+- Backend: https://github.com/Jmanu866/TallerIdwm
 
 ---
 

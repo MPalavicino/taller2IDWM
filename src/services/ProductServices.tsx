@@ -6,6 +6,10 @@ import { Product } from "@/interfaces/Product";
 export interface ProductFilters {
     pageNumber: number;
     pageSize: number;
+    search?: string;
+    categories?: string;
+    brands?: string;
+    orderBy?: "price" | "priceDesc";
 }
 
 export const ProductServices = {

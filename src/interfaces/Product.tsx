@@ -1,5 +1,5 @@
 export interface Product    {
-   id?: number;
+   id: number;
   name: string;
   description?: string;
   price: number;
@@ -8,5 +8,16 @@ export interface Product    {
   stock?: number;
   brand?: string;
   isActive?: boolean;
-  publicID: string | null; // esto era `null` fijo, lo cambié a string | null
+  publicID: string | null;
+  condition?:   number; 
   }
+
+  export interface CartItem extends Product {
+    productId: number;
+    name: string;
+    quantity: number;
+    price: number;
+    pictureUrl: string;
+    category: string;
+    brand: string;
+}
